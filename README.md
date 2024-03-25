@@ -1,4 +1,4 @@
-# Classic FizzBuzz example in Go
+# Go examples
 
-Run with:
+Navigate to folder and run with:
 `go run main.go`
