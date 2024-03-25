@@ -5,14 +5,27 @@ import (
 	"math/rand"
 )
 
-func main() {
+func getNum() int {
 	x := rand.Intn(45) + 1
+	return x
+}
+
+func printFizz() {
+	fmt.Print("Fizz")
+}
+
+func printBuzz() {
+	fmt.Print("Buzz")
+}
+
+func main() {
+	x := getNum()
 	println(x)
 	if x % 3 == 0 {
-		fmt.Print("Fizz")
+		printFizz()
 	}
 	if x % 5 == 0 {
-		fmt.Print("Buzz")
+		printBuzz()
 	}
 	println()
 }
