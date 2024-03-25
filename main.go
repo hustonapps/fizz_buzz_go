@@ -19,13 +19,16 @@ func printBuzz() {
 }
 
 func main() {
-	x := getNum()
-	println(x)
-	if x % 3 == 0 {
-		printFizz()
+	for i := 0; i < 51; i++ {
+		x := getNum()
+		fmt.Printf("%v \n", x)
+		if x % 3 == 0 {
+			printFizz()
+		}
+		if x % 5 == 0 {
+			printBuzz()
+		}
+		println()
+		println()
 	}
-	if x % 5 == 0 {
-		printBuzz()
-	}
-	println()
 }
