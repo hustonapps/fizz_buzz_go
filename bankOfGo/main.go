@@ -42,6 +42,7 @@ func main() {
 		fmt.Println("ERROR!!!")
 		fmt.Println(err)
 		fmt.Println("---------")
+		// panic() shows more of a stack trace
 	}
 
 	fmt.Println("\nWelcome to Go Bank!")
@@ -75,6 +76,9 @@ func main() {
 			fmt.Scan(&withdrawAmount)
 			if (withdrawAmount > accountBalance) {
 				fmt.Println("\nInsufficient funds. Please try again.")
+				continue
+			} else if (withdrawAmount <= 0) {
+				fmt.Println("\nInvalid withdrawal amount. Please try again.")
 				continue
 			}
 			accountBalance -= withdrawAmount
