@@ -1,42 +1,14 @@
 package main
 
 import (
-	"errors"
+	bankUtils "fizz_buzz_go"
 	"fmt"
-	"os"
-	"strconv"
 )
 
 const filename = "Balance.txt"
 
-var choiceMap = map[int]string {
-	1: "Check balance",
-	2: "Deposit money",
-	3: "Withdraw money",
-	4: "Exit",
-}
-
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(filename, []byte(balanceText), 0644)
-}
-
-func readBalanceFromFile() (float64, error) {
-	balanceText, err := os.ReadFile(filename)
-	if err != nil {
-		return 0, errors.New("failed to read file")
-	}
-
-	balance, err := strconv.ParseFloat(string(balanceText), 64)
-	if err != nil {
-		return 0, errors.New("failed to parse balance")
-	}
-
-	return balance, nil
-}
-
 func main() {
-	accountBalance, err := readBalanceFromFile()
+	accountBalance, err := bankUtils.ReadBalanceFromFile(filename)
 
 	if err != nil {
 		fmt.Println("ERROR!!!")
@@ -48,7 +20,7 @@ func main() {
 	fmt.Println("\nWelcome to Go Bank!")
 
 	for {
-		showMenu()
+		bankUtils.ShowMenu()
 
 		var choice int
 		fmt.Print("Your choice: ")
@@ -69,7 +41,7 @@ func main() {
 
 			accountBalance += depositAmount
 			showBalance(accountBalance)
-			writeBalanceToFile(accountBalance)
+			bankUtils.WriteBalanceToFile(accountBalance, filename)
 		case 3:
 			fmt.Print("Withdraw amount: $")
 			var withdrawAmount float64;
@@ -83,20 +55,12 @@ func main() {
 			}
 			accountBalance -= withdrawAmount
 			showBalance(accountBalance)
-			writeBalanceToFile(accountBalance)
+			bankUtils.WriteBalanceToFile(accountBalance, filename)
 		default:
 			fmt.Println("\nThank you for using Go Bank!")
 			return
 		}
 	}
-}
-
-func showMenu() {
-	fmt.Println("What do you want to do?")
-	for k, v := range choiceMap {
-		fmt.Printf("%d. %s\n", k, v)
-	}
-	fmt.Println()
 }
 
 func showBalance(bal float64) {
