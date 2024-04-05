@@ -1,7 +1,7 @@
 package main
 
 import (
-	bankUtils "fizz_buzz_go"
+	"fizz_buzz_go/bankUtils"
 	"fmt"
 )
 
