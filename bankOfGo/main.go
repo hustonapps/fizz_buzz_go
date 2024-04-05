@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+const filename = "Balance.txt"
 
 var choiceMap = map[int]string {
 	1: "Check balance",
@@ -9,8 +15,27 @@ var choiceMap = map[int]string {
 	4: "Exit",
 }
 
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile(filename, []byte(balanceText), 0644)
+}
+
+func readBalanceFromFile() float64 {
+	balanceText, err := os.ReadFile(filename)
+	if err != nil {
+		return 0
+	}
+
+	balance, err := strconv.ParseFloat(string(balanceText), 64)
+	if err != nil {
+		return 0
+	}
+
+	return balance
+}
+
 func main() {
-	var accountBalance float64 = 1000.0
+	accountBalance := readBalanceFromFile()
 
 	fmt.Println("\nWelcome to Go Bank!")
 
@@ -36,6 +61,7 @@ func main() {
 
 			accountBalance += depositAmount
 			showBalance(accountBalance)
+			writeBalanceToFile(accountBalance)
 		case 3:
 			fmt.Print("Withdraw amount: $")
 			var withdrawAmount float64;
@@ -46,6 +72,7 @@ func main() {
 			}
 			accountBalance -= withdrawAmount
 			showBalance(accountBalance)
+			writeBalanceToFile(accountBalance)
 		default:
 			fmt.Println("\nThank you for using Go Bank!")
 			return
